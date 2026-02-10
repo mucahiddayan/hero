@@ -1,0 +1,32 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: shopping-list-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: shopping-list-backend
+    ports:
+      - "5300:5300"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/shopping-list
+      - PORT=5300
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: shopping-list-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5300/api
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:

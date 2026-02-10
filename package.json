@@ -1,0 +1,16 @@
+{
+  "name": "shopping-list-app",
+  "version": "1.0.0",
+  "description": "Shopping List Application",
+  "scripts": {
+    "prebuild": "npm i && concurrently 'npm i --prefix backend' 'npm i --prefix frontend'",
+    "build": "docker compose build",
+    "start": "docker compose up -d mongo backend && cd frontend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
